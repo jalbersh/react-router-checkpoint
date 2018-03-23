@@ -10,6 +10,7 @@ import {
   Alert,
   Input
 } from 'reactstrap'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { userLogin } from '../actions/auth.actions'
@@ -63,7 +64,7 @@ class Login extends Component {
               <Button className="mr-3" type="submit" color="primary">
                 Submit
               </Button>
-              <a href="/signup">Not a member?</a>
+              <Link to="/signup">Not a member?</Link>
             </Form>
           </Col>
         </Row>
