@@ -9,7 +9,7 @@ import UserProfile from './components/UserProfile'
 import TopNav from './components/TopNav'
 import store from './store';
 import 'bootswatch/dist/materia/bootstrap.min.css'
-import './index.css';
+import './index.css'
 
 ReactDOM.render(
   <Provider store={store}>

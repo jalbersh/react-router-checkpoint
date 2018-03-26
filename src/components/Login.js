@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { userLogin } from '../actions/auth.actions'
+import store from '../store'
 
 class Login extends Component {
   state = {
@@ -21,7 +22,24 @@ class Login extends Component {
     password: ''
   }
 
+  constructor(props) {
+    super(props)
+    this.state={email: this.props.email, password: this.props.password}
+    this.submitHandler = this.submitHandler.bind(this)
+  }
+
+  submitHandler(e) {
+        e.preventDefault()
+        const target = e.target
+        const email = target.email.value
+        const password = target.password.value
+        console.log('email',email,' password',password)
+        e.target.reset()
+        store.dispatch(userLogin(email,password))
+   }
+
   render() {
+//    const { history, user, isLoading } = this.props
     return (
       <Container className="main-wrapper">
         <Row style={{ marginTop: '15vh' }}>
@@ -33,7 +51,7 @@ class Login extends Component {
               boxShadow: '3px 3px 47px 0px rgba(0,0,0,0.5)'
             }}
           >
-            <Form>
+            <Form  onSubmit={this.submitHandler}>
               <FormGroup>
                 <Label for="email-field">Email</Label>
                 <Input
@@ -72,6 +90,14 @@ class Login extends Component {
     )
   }
 }
+
+//    const mapDispatchToProps = dispatch => {
+//        console.log('in mapDispatchToProps')
+//            bindActionCreators(
+//            {
+//                addMessageInAPI,fetchMessagesInAPI,updateMessagesInAPI
+//            }, dispatch)
+//    }
 
 function mapStateToProps(state) {
   return {

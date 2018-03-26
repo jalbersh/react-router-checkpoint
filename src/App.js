@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-//import Login from './components/Login'
 import TopNav from './components/TopNav'
 import './App.css'
 

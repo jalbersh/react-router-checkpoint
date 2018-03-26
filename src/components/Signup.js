@@ -13,6 +13,7 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { userSignup } from '../actions/auth.actions'
+import store from '../store'
 
 export class Signup extends Component {
   state = {
@@ -26,8 +27,15 @@ export class Signup extends Component {
     password: '',
     verify_password: ''
   }
-  userSignup = e => {
+
+  constructor(props) {
+    super(props)
+    this.doUserSignup = this.doUserSignup.bind(this)
+  }
+
+  doUserSignup = e => {
     e.preventDefault()
+    console.log('in doUserSignup')
     let { name, email, company, phone, password, verify_password, address } = this.state
     if (!password || password !== verify_password || !verify_password) {
       this.setState({
@@ -37,7 +45,8 @@ export class Signup extends Component {
     } else {
       let newUser = {name, email, company, phone, password, address}
       console.log('newUser', newUser)
-      this.props.userSignup(newUser)
+//      this.props.userSignup(newUser)
+      store.dispatch(userSignup(newUser))
     }
   }
 
@@ -53,7 +62,7 @@ export class Signup extends Component {
               boxShadow: '3px 3px 47px 0px rgba(0,0,0,0.5)'
             }}
           >
-            <Form onSubmit={this.userSignup}>
+            <Form onSubmit={this.doUserSignup}>
               <FormGroup>
                 <Label for="name">Name</Label>
                 <Input
