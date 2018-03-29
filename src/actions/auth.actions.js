@@ -1,31 +1,39 @@
-export const USER_LOGIN_PENDING = 'USER_LOGIN_PENDING'
-export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS'
-export const USER_LOGIN_FAILED = 'USER_LOGIN_FAILED'
-
-export const USER_SIGNUP_PENDING = 'USER_SIGNUP_PENDING'
-export const USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS'
-export const USER_SIGNUP_FAILED = 'USER_SIGNUP_FAILED'
-
-export const USER_LOGOUT = 'USER_LOGOUT'
+import { USER_LOGIN_PENDING,
+         USER_LOGIN_SUCCESS,
+         USER_LOGIN_FAILED,
+         USER_SIGNUP_SUCCESS,
+         USER_SIGNUP_FAILED,
+         USER_LOGOUT
+} from '../utils/constants'
 
 const BASE_URL = 'http://localhost:8082'
 
-export const userLogin = ({email, password}) => {
-  console.log('in userLogin')
-  const { history } = this.props
+export const userLogin = (email, password, loggedOn) => {
+  console.log('in userLogin with ',email,password,loggedOn)
   return async (dispatch) => {
     try {
+      console.log('stringified:',JSON.stringify({email, password}))
       dispatch({type: USER_LOGIN_PENDING})
       let response = await fetch(`${BASE_URL}/api/login`, {
-        method: "POST",
-        body: JSON.stringify({email, password})
+          method: "POST",
+          body: JSON.stringify({email, password}),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
       })
       let userObject = await response.json()
+      console.log('userObject',userObject)
       dispatch({
         type: USER_LOGIN_SUCCESS,
         payload: userObject
       })
-      history.push('/profile')
+      try {
+            console.log('userLogin action calling loggedOn with',userObject)
+            loggedOn(userObject)
+      } catch (err1) {
+            console.log('problem calling loggedOn',err1)
+      }
     } catch(err) {
       dispatch({
         type: USER_LOGIN_FAILED,
@@ -37,7 +45,6 @@ export const userLogin = ({email, password}) => {
 
 export const userSignup = (newUser) => {
   console.log('in userSignup with',newUser)
-  const { history } = this.props
   return async (dispatch) => {
     try {
       dispatch({type: USER_LOGIN_PENDING})
@@ -51,7 +58,6 @@ export const userSignup = (newUser) => {
         type: USER_SIGNUP_SUCCESS,
         payload: isSignedUp
       })
-      history.push('/profile')
     } catch(err) {
       dispatch({
         type: USER_SIGNUP_FAILED,

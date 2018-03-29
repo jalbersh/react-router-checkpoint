@@ -14,32 +14,44 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { userLogin } from '../actions/auth.actions'
-import store from '../store'
+import { USER_LOGGED_IN } from '../utils/constants'
+import store from '../utils/store'
 
 class Login extends Component {
-  state = {
-    email: '',
-    password: ''
-  }
+//      state = {
+//        email: '',
+//        password: ''
+//      }
 
   constructor(props) {
-    super(props)
-    this.state={email: this.props.email, password: this.props.password}
-    this.submitHandler = this.submitHandler.bind(this)
+      super(props)
+      this.submitHandler = this.submitHandler.bind(this)
+      this.loggedOn = this.loggedOn.bind(this)
+  }
+
+
+  loggedOn(loggedInUser) {
+        console.log('in loggedOn with',loggedInUser)
+        if (loggedInUser) {
+            console.log('trying to redirect with',loggedInUser)
+            store.dispatch({type:USER_LOGGED_IN, user:loggedInUser})
+            this.props.history.push('/profile')
+        }
   }
 
   submitHandler(e) {
+        console.log('in Login.submitHandler')
         e.preventDefault()
         const target = e.target
         const email = target.email.value
         const password = target.password.value
         console.log('email',email,' password',password)
         e.target.reset()
-        store.dispatch(userLogin(email,password))
-   }
+        console.log('calling userLogin with ',email,password,this.loggedOn)
+        store.dispatch(userLogin(email,password,this.loggedOn))
+  }
 
   render() {
-//    const { history, user, isLoading } = this.props
     return (
       <Container className="main-wrapper">
         <Row style={{ marginTop: '15vh' }}>
@@ -59,7 +71,7 @@ class Login extends Component {
                   name="email"
                   id="email-field"
                   placeholder="email"
-                  value={this.state.email}
+                  value={this.props.email}
                   onChange={e => this.setState({email: e.target.value})}
                 />
               </FormGroup>
@@ -70,7 +82,7 @@ class Login extends Component {
                   name="password"
                   id="pass-field"
                   placeholder="password"
-                  value={this.state.password}
+                  value={this.props.password}
                   onChange={e => this.setState({password: e.target.value})}
                 />
               </FormGroup>
@@ -91,17 +103,10 @@ class Login extends Component {
   }
 }
 
-//    const mapDispatchToProps = dispatch => {
-//        console.log('in mapDispatchToProps')
-//            bindActionCreators(
-//            {
-//                addMessageInAPI,fetchMessagesInAPI,updateMessagesInAPI
-//            }, dispatch)
-//    }
-
 function mapStateToProps(state) {
   return {
-    showLoginError: state.auth.showLoginError
+    showLoginError: state.auth.showLoginError,
+    user: state.auth.user
   }
 }
 
@@ -112,3 +117,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
+//export default Login;

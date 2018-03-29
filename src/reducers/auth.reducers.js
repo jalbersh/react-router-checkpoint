@@ -1,11 +1,11 @@
-import {
-  USER_LOGIN_PENDING,
-  USER_LOGIN_SUCCESS,
-  USER_LOGIN_FAILED,
-  USER_SIGNUP_PENDING,
-  USER_SIGNUP_SUCCESS,
-  USER_SIGNUP_FAILED
-} from '../actions/auth.actions'
+import { USER_LOGIN_PENDING,
+         USER_LOGIN_SUCCESS,
+         USER_LOGIN_FAILED,
+         USER_SIGNUP_PENDING,
+         USER_SIGNUP_SUCCESS,
+         USER_SIGNUP_FAILED,
+         USER_LOGGED_IN
+} from '../utils/constants'
 
 let initialState = {
   isLoading: false,
@@ -19,6 +19,7 @@ export default(state = initialState, action) => {
     case USER_LOGIN_PENDING:
       return {...state, isLoading: true}
     case USER_LOGIN_SUCCESS:
+      console.log('setting state for user',action.payload.data)
       return {...state, isLoading: false, user: action.payload.data}
     case USER_LOGIN_FAILED:
       return {...state, isLoading: false, showLoginError: true}
@@ -28,6 +29,8 @@ export default(state = initialState, action) => {
       return {...state, isLoading: false}
     case USER_SIGNUP_FAILED:
       return {...state, isLoading: false, showSignupError: true}
+    case USER_LOGGED_IN:
+      return {...state, user: action.user}
     default:
       return state;
   }

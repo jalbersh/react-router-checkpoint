@@ -10,33 +10,32 @@ import {
   Alert,
   Input
 } from 'reactstrap'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+//import { connect } from 'react-redux'
+//import { bindActionCreators } from 'redux'
 import { userSignup } from '../actions/auth.actions'
-import store from '../store'
+import store from '../utils/store'
 
-export class Signup extends Component {
-  state = {
-    isValid: true,
-    passwordClasses: 'form-control',
-    name: '',
-    email: '',
-    company: '',
-    phone: '',
-    address: '',
-    password: '',
-    verify_password: ''
-  }
-
+class Signup extends Component {
+      state = {
+        isValid: true,
+        passwordClasses: 'form-control',
+        name: '',
+        email: '',
+        company: '',
+        phone: '',
+        address: '',
+        password: '',
+        verify_password: ''
+      }
   constructor(props) {
-    super(props)
-    this.doUserSignup = this.doUserSignup.bind(this)
+      super(props)
+      this.doUserSignup = this.doUserSignup.bind(this)
   }
 
   doUserSignup = e => {
     e.preventDefault()
     console.log('in doUserSignup')
-    let { name, email, company, phone, password, verify_password, address } = this.state
+    let { name, email, company, phone, password, verify_password, address } = this.props
     if (!password || password !== verify_password || !verify_password) {
       this.setState({
         passwordClasses: this.state.passwordClasses + ' is-invalid',
@@ -70,7 +69,7 @@ export class Signup extends Component {
                   name="name"
                   id="name-field"
                   placeholder="name"
-                  value={this.state.name}
+                  value={this.props.name}
                   onChange={e =>
                     this.setState({ name: e.target.value })
                   }
@@ -83,7 +82,7 @@ export class Signup extends Component {
                   name="email"
                   id="email-field"
                   placeholder="email"
-                  value={this.state.email}
+                  value={this.props.email}
                   onChange={e =>
                     this.setState({ email: e.target.value })
                   }
@@ -96,7 +95,7 @@ export class Signup extends Component {
                   name="company"
                   id="company-field"
                   placeholder="company"
-                  value={this.state.company}
+                  value={this.props.company}
                   onChange={e =>
                     this.setState({ company: e.target.value })
                   }
@@ -109,7 +108,7 @@ export class Signup extends Component {
                   name="phone"
                   id="phone-field"
                   placeholder="phone"
-                  value={this.state.phone}
+                  value={this.props.phone}
                   onChange={e =>
                     this.setState({ phone: e.target.value })
                   }
@@ -122,7 +121,7 @@ export class Signup extends Component {
                   name="address"
                   id="address-field"
                   placeholder="address"
-                  value={this.state.address}
+                  value={this.props.address}
                   onChange={e =>
                     this.setState({ address: e.target.value })
                   }
@@ -135,7 +134,7 @@ export class Signup extends Component {
                   name="password"
                   id="password-field"
                   placeholder="password"
-                  value={this.state.password}
+                  value={this.props.password}
                   onChange={e =>
                     this.setState({ password: e.target.value })
                   }
@@ -168,10 +167,11 @@ export class Signup extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    userSignup: bindActionCreators(userSignup, dispatch)
-  }
-}
-
-export default connect(null, mapDispatchToProps)(Signup)
+//function mapDispatchToProps(dispatch) {
+//  return {
+//    userSignup: bindActionCreators(userSignup, dispatch)
+//  }
+//}
+//
+//export default connect(null, mapDispatchToProps)(Signup)
+export default Signup;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -8,9 +8,10 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink } from 'reactstrap';
+  NavLink} from 'reactstrap';
 
-export default class Example extends React.Component {
+//export default class Example extends React.Component {
+export default class TopNav extends Component {
   state = {
     isOpen: false
   }
