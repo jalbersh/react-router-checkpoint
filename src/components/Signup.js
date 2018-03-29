@@ -10,8 +10,9 @@ import {
   Alert,
   Input
 } from 'reactstrap'
-//import { connect } from 'react-redux'
-//import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { USER_SIGNED_UP } from '../utils/constants'
 import { userSignup } from '../actions/auth.actions'
 import store from '../utils/store'
 
@@ -27,16 +28,28 @@ class Signup extends Component {
         password: '',
         verify_password: ''
       }
+
   constructor(props) {
       super(props)
       this.doUserSignup = this.doUserSignup.bind(this)
+      this.loggedOn = this.loggedOn.bind(this)
+  }
+
+  loggedOn(loggedInUser) {
+        console.log('in loggedOn with',loggedInUser)
+        if (loggedInUser) {
+            console.log('trying to redirect with',loggedInUser)
+            store.dispatch({type:USER_SIGNED_UP, user:loggedInUser})
+            this.props.history.push('/profile')
+        }
   }
 
   doUserSignup = e => {
     e.preventDefault()
-    console.log('in doUserSignup')
-    let { name, email, company, phone, password, verify_password, address } = this.props
+    let { name, email, company, phone, password, verify_password, address } = this.state
+    console.log('in doUserSignup',e)
     if (!password || password !== verify_password || !verify_password) {
+      console.log('passwords invalid')
       this.setState({
         passwordClasses: this.state.passwordClasses + ' is-invalid',
         isValid: false
@@ -45,7 +58,7 @@ class Signup extends Component {
       let newUser = {name, email, company, phone, password, address}
       console.log('newUser', newUser)
 //      this.props.userSignup(newUser)
-      store.dispatch(userSignup(newUser))
+      store.dispatch(userSignup(newUser,this.loggedOn))
     }
   }
 
@@ -167,6 +180,21 @@ class Signup extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    showSignupError: state.auth.showSignupError,
+    user: state.auth.user
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    userSignup: bindActionCreators(userSignup, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup)
+
 //function mapDispatchToProps(dispatch) {
 //  return {
 //    userSignup: bindActionCreators(userSignup, dispatch)
@@ -174,4 +202,4 @@ class Signup extends Component {
 //}
 //
 //export default connect(null, mapDispatchToProps)(Signup)
-export default Signup;
+//export default Signup;

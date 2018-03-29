@@ -43,7 +43,7 @@ export const userLogin = (email, password, loggedOn) => {
   }
 };
 
-export const userSignup = (newUser) => {
+export const userSignup = (newUser, loggedOn) => {
   console.log('in userSignup with',newUser)
   return async (dispatch) => {
     try {
@@ -54,10 +54,17 @@ export const userSignup = (newUser) => {
         body: JSON.stringify(newUser)
       })
       let isSignedUp = await response.json()
+      console.log('isSignedUp',isSignedUp)
       dispatch({
         type: USER_SIGNUP_SUCCESS,
         payload: isSignedUp
       })
+      try {
+            console.log('userSignup action calling loggedOn with',newUser)
+            loggedOn(newUser)
+      } catch (err1) {
+            console.log('problem calling loggedOn',err1)
+      }
     } catch(err) {
       dispatch({
         type: USER_SIGNUP_FAILED,

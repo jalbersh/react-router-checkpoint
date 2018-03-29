@@ -4,7 +4,8 @@ import { USER_LOGIN_PENDING,
          USER_SIGNUP_PENDING,
          USER_SIGNUP_SUCCESS,
          USER_SIGNUP_FAILED,
-         USER_LOGGED_IN
+         USER_LOGGED_IN,
+         USER_SIGNED_UP
 } from '../utils/constants'
 
 let initialState = {
@@ -29,6 +30,7 @@ export default(state = initialState, action) => {
       return {...state, isLoading: false}
     case USER_SIGNUP_FAILED:
       return {...state, isLoading: false, showSignupError: true}
+    case USER_SIGNED_UP:
     case USER_LOGGED_IN:
       return {...state, user: action.user}
     default:
