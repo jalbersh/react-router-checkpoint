@@ -25,7 +25,7 @@ export default(state = initialState, action) => {
     case USER_LOGIN_PENDING:
       return {...state, isLoading: true}
     case USER_LOGIN_SUCCESS:
-      console.log('setting state for user',action.payload.data)
+//      console.log('setting state for user',action.payload.data)
       return {...state, isLoading: false, user: action.payload.data, isOpen: true}
     case USER_LOGOUT_FAILED:
     case USER_LOGIN_FAILED:
@@ -42,8 +42,8 @@ export default(state = initialState, action) => {
     case TOGGLE:
       return {...state, isOpen: action.isOpen}
     case USER_LOGOUT:
-      console.log('b4 changing state',state)
-      console.log('setting to isOpen: false, isLoading: false, logout: true')
+//      console.log('b4 changing state',state)
+//      console.log('setting to isOpen: false, isLoading: false, logout: true')
       return {...state, isOpen: false, isLoading: false, logout: true}
     default:
       return state;

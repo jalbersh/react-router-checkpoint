@@ -29,7 +29,7 @@ export const userLogin = (email, password, loggedOn) => {
         payload: userObject
       })
       try {
-            console.log('userLogin action calling loggedOn with',userObject)
+//            console.log('userLogin action calling loggedOn with',userObject)
             loggedOn(userObject)
       } catch (err1) {
             console.log('problem calling loggedOn',err1)
@@ -65,7 +65,7 @@ export const userSignup = (newUser, loggedOn) => {
         payload: isSignedUp
       })
       try {
-            console.log('userSignup action dispatching with',newUser)
+//            console.log('userSignup action dispatching with',newUser)
             dispatch(userLogin(newUser.email,newUser.password,loggedOn))
 //            loggedOn(newUser)
       } catch (err1) {
