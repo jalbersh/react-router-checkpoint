@@ -14,40 +14,32 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { userLogin } from '../actions/auth.actions'
-import { USER_LOGGED_IN } from '../utils/constants'
+import { USER_LOGGED_IN,TOGGLE } from '../utils/constants'
 import store from '../utils/store'
 
 class Login extends Component {
-//      state = {
-//        email: '',
-//        password: ''
-//      }
 
   constructor(props) {
       super(props)
       this.submitHandler = this.submitHandler.bind(this)
       this.loggedOn = this.loggedOn.bind(this)
+      this.state = {email:'',password:''}
   }
 
-
   loggedOn(loggedInUser) {
-        console.log('in loggedOn with',loggedInUser)
         if (loggedInUser) {
-            console.log('trying to redirect with',loggedInUser)
             store.dispatch({type:USER_LOGGED_IN, user:loggedInUser})
+            store.dispatch({type:TOGGLE, isOpen:true})
             this.props.history.push('/profile')
         }
   }
 
   submitHandler(e) {
-        console.log('in Login.submitHandler')
         e.preventDefault()
         const target = e.target
         const email = target.email.value
         const password = target.password.value
-        console.log('email',email,' password',password)
         e.target.reset()
-        console.log('calling userLogin with ',email,password,this.loggedOn)
         store.dispatch(userLogin(email,password,this.loggedOn))
   }
 
@@ -106,7 +98,10 @@ class Login extends Component {
 function mapStateToProps(state) {
   return {
     showLoginError: state.auth.showLoginError,
-    user: state.auth.user
+    user: state.auth.user,
+    isOpen: state.auth.isOpen,
+    auth: state.auth,
+    logout: state.auth.logout
   }
 }
 
@@ -117,4 +112,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
-//export default Login;

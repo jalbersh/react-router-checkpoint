@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import TopNav from './components/TopNav'
 import './App.css'
-import { userSignup,userLogout,userLogin } from './actions/auth.actions'
+//import { bindActionCreators } from 'redux'
+//import { userSignup,userLogout,userLogin } from './actions/auth.actions'
 
-//export const App = () => {
 class App extends Component {
 
   constructor(props) {
@@ -15,31 +14,39 @@ class App extends Component {
   }
 
   render() {
-      return (
-        <div>
-          <Link to="/topnav"><TopNav /></Link>
-        </div>
-      )
+//      console.log('in App.render',this.props)
+//      if (!this.props.auth.logout) {
+          return (
+            <div>
+              <Link to="/login"><TopNav history={this.props.history} /></Link>
+            </div>
+          )
+//      } else {
+//          return (
+//            <div>
+//            </div>
+//          )
+//      }
   }
 }
 
-const mapDispatchToProps = dispatch => {
-   console.log('in mapDispatchToProps')
-   bindActionCreators(
-      {
-         userSignup,userLogout,userLogin
-      }, dispatch)
-}
+//const mapDispatchToProps = dispatch => {
+//   bindActionCreators(
+//      {
+//         userSignup,userLogout,userLogin
+//      }, dispatch)
+//}
 
 function mapStateToProps(state) {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    auth: state.auth,
+    isOpen: state.isOpen,
+    logout: state.auth.logout
   }
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(App);
-
-//export default App

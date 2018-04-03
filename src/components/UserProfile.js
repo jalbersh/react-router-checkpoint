@@ -6,24 +6,19 @@ import {
 } from 'reactstrap'
 import { connect } from 'react-redux'
 
-//const UserProfile = (props) => {
 class UserProfile extends Component {
 
   constructor(props) {
       super(props)
-      console.log('up props', props)
       this.state={user: this.props.user}
       this.setProfile = this.setProfile.bind(this)
   }
 
   setProfile(newUser) {
-        console.log('in setProfile with',newUser)
         this.setState({user: newUser})
   }
 
   render() {
-      console.log('userProps-render:props',this.props)
-      console.log('userProps-render:state',this.state)
       const user = this.props.user
       return (
         <div>
@@ -34,9 +29,6 @@ class UserProfile extends Component {
               </Col>
             </Row>
             <Row style={{marginTop: 20}}>
-              <Col>
-                <img src="http://via.placeholder.com/350x450" alt="profile" />
-              </Col>
               <Col>
                 <h3>Name: {user.name}</h3>
                 <h3>Email: {user.email}</h3>
@@ -58,4 +50,7 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, null)(UserProfile)
-//export default UserProfile;
+
+//              <Col>
+//                <img src="http://via.placeholder.com/350x450" alt="profile" />
+//              </Col>

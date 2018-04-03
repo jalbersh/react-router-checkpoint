@@ -17,28 +17,28 @@ import { userSignup } from '../actions/auth.actions'
 import store from '../utils/store'
 
 class Signup extends Component {
-      state = {
-        isValid: true,
-        passwordClasses: 'form-control',
-        name: '',
-        email: '',
-        company: '',
-        phone: '',
-        address: '',
-        password: '',
-        verify_password: ''
-      }
 
   constructor(props) {
       super(props)
+      this.state = {
+              isValid: true,
+              passwordClasses: 'form-control',
+              name: '',
+              email: '',
+              company: '',
+              phone: '',
+              address: '',
+              password: '',
+              verify_password: ''
+            }
       this.doUserSignup = this.doUserSignup.bind(this)
       this.loggedOn = this.loggedOn.bind(this)
   }
 
   loggedOn(loggedInUser) {
-        console.log('in loggedOn with',loggedInUser)
+//        console.log('in loggedOn with',loggedInUser)
         if (loggedInUser) {
-            console.log('trying to redirect with',loggedInUser)
+//            console.log('trying to redirect with',loggedInUser)
             store.dispatch({type:USER_SIGNED_UP, user:loggedInUser})
             this.props.history.push('/profile')
         }
@@ -47,7 +47,7 @@ class Signup extends Component {
   doUserSignup = e => {
     e.preventDefault()
     let { name, email, company, phone, password, verify_password, address } = this.state
-    console.log('in doUserSignup',e)
+//    console.log('in doUserSignup',e)
     if (!password || password !== verify_password || !verify_password) {
       console.log('passwords invalid')
       this.setState({
@@ -195,11 +195,3 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup)
 
-//function mapDispatchToProps(dispatch) {
-//  return {
-//    userSignup: bindActionCreators(userSignup, dispatch)
-//  }
-//}
-//
-//export default connect(null, mapDispatchToProps)(Signup)
-//export default Signup;

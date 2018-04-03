@@ -16,7 +16,7 @@ ReactDOM.render(
             <Router>
                 <div>
                       <Route path="/" component={App} />
-                      <Route path="/topnav" component={TopNav}/>
+                      <Route exact path="/topnav" component={TopNav}/>
                       <Route exact path="/login" component={Login}/>
                       <Route exact path="/signup" component={Signup}/>
                       <Route exact path="/profile" component={UserProfile}/>
