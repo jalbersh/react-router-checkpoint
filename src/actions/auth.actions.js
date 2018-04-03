@@ -12,11 +12,12 @@ export const userLogin = (email, password, loggedOn) => {
 //  console.log('in userLogin with ',email,password,loggedOn)
   return async (dispatch) => {
     try {
-//      console.log('stringified:',JSON.stringify({email, password}))
+      const json = JSON.stringify({email, password})
+//      console.log('stringified:',json)
       dispatch({type: USER_LOGIN_PENDING})
       let response = await fetch(`${BASE_URL}/api/login`, {
           method: "POST",
-          body: JSON.stringify({email, password}),
+          body: json,
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
