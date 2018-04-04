@@ -9,11 +9,9 @@ import { USER_LOGIN_PENDING,
 const BASE_URL = 'http://localhost:8082'
 
 export const userLogin = (email, password, loggedOn) => {
-//  console.log('in userLogin with ',email,password,loggedOn)
   return async (dispatch) => {
     try {
       const json = JSON.stringify({email, password})
-//      console.log('stringified:',json)
       dispatch({type: USER_LOGIN_PENDING})
       let response = await fetch(`${BASE_URL}/api/login`, {
           method: "POST",
@@ -24,13 +22,11 @@ export const userLogin = (email, password, loggedOn) => {
           }
       })
       let userObject = await response.json()
-//      console.log('userObject',userObject)
       dispatch({
         type: USER_LOGIN_SUCCESS,
         payload: userObject
       })
       try {
-//            console.log('userLogin action calling loggedOn with',userObject)
             loggedOn(userObject)
       } catch (err1) {
             console.log('problem calling loggedOn',err1)
@@ -45,7 +41,6 @@ export const userLogin = (email, password, loggedOn) => {
 };
 
 export const userSignup = (newUser, loggedOn) => {
-//  console.log('in userSignup with',newUser)
   return async (dispatch) => {
     try {
       dispatch({type: USER_LOGIN_PENDING})
@@ -60,7 +55,6 @@ export const userSignup = (newUser, loggedOn) => {
           }
       })
       let isSignedUp = await response.json()
-//      console.log('isSignedUp',isSignedUp)
       dispatch({
         type: USER_SIGNUP_SUCCESS,
         payload: isSignedUp
@@ -82,9 +76,7 @@ export const userSignup = (newUser, loggedOn) => {
 };
 
 export const userLogout = () => {
-//  console.log('in userLogout')
   return async(dispatch) => {
       dispatch({type: USER_LOGOUT})
-//      console.log('end userLogout')
   }
 }

@@ -26,14 +26,14 @@ export default(state = initialState, action) => {
       return {...state, isLoading: true}
     case USER_LOGIN_SUCCESS:
 //      console.log('setting state for user',action.payload.data)
-      return {...state, isLoading: false, user: action.payload.data, isOpen: true}
+      return {...state, isLoading: false, user: action.payload.data, isOpen: true, showLoginError: false}
     case USER_LOGOUT_FAILED:
     case USER_LOGIN_FAILED:
       return {...state, isLoading: false, showLoginError: true}
     case USER_SIGNUP_PENDING:
       return {...state, isLoading: true}
     case USER_SIGNUP_SUCCESS:
-      return {...state, isLoading: false}
+      return {...state, isLoading: false, showSignupError: false}
     case USER_SIGNUP_FAILED:
       return {...state, isLoading: false, showSignupError: true}
     case USER_SIGNED_UP:
@@ -44,7 +44,7 @@ export default(state = initialState, action) => {
     case USER_LOGOUT:
 //      console.log('b4 changing state',state)
 //      console.log('setting to isOpen: false, isLoading: false, logout: true')
-      return {...state, isOpen: false, isLoading: false, logout: true}
+      return {...state, isOpen: false, isLoading: false, logout: true, showLoginError: false, showSignupError: false}
     default:
       return state;
   }
